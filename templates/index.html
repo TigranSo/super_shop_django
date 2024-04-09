@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    index
+{% endblock title %}		
+
+{% block container %}
+    {% for message in messages %}
+        <div class="message">
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            <!-- <a href="#" class="del-msg">&times;</a> -->
+        </div>
+    {% endfor %}
+    <section id="home-section" class="hero">
+		  <div class="home-slider js-fullheight owl-carousel">
+	      <div class="slider-item js-fullheight">
+	      	<div class="overlay"></div>
+	        <div class="container-fluid p-0">
+	          <div class="row d-md-flex no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
+	          	<div class="one-third order-md-last img js-fullheight" style="background-image:url(/static/images/bg_1.jpg);">
+	          	</div>
+		          <div class="one-forth d-flex js-fullheight align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+		          	<div class="text">
+		          		<span class="subheading">Добро пожаловать в наш магазин</span>
+		          		<div class="horizontal">
+		          			<h3 class="vr" style="background-image: url(/static/images/divider.jpg);"></h3>
+				            <h1 class="mb-4 mt-3">В нашем мы предлагаем не просто продукты, а ключ к богатой и многогранной культуре Китая через его кулинарные традиции.</p>
+				          </div>
+		            </div>
+		          </div>
+	        	</div>
+	        </div>
+	      </div>
+
+	      <div class="slider-item js-fullheight">
+	      	<div class="overlay"></div>
+	        <div class="container-fluid p-0">
+	          <div class="row d-flex no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
+	          	<div class="one-third order-md-last img js-fullheight" style="background-image:url(/static/images/bg_2.jpg);">
+	          	</div>
+		          <div class="one-forth d-flex js-fullheight align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+		          	<div class="text">
+		          		<span class="subheading">Китайская кухня</span>
+		          		<div class="horizontal">
+		          			<h3 class="vr" style="background-image: url(/static/images/divider.jpg);"></h3>
+				            <h1 class="mb-4 mt-3">От традиционных специй и соусов, необходимых для приготовления подлинных китайских блюд, до редких ингредиентов, которые трудно найти за пределами родины драконов - у нас есть всё, чтобы удовлетворить любопытство как новичков, так и опытных кулинаров.</p>
+				            
+				          </div>
+		            </div>
+		          </div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div>
+    </section>
+	<br>	
+    <section class="ftco-section ftco-choose ftco-no-pb ftco-no-pt">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-8 d-flex align-items-stretch">
+    				<div class="img" style="background-image: url(/static/images/about-1.jpg);"></div>
+    			</div>
+    			<div class="col-md-4 py-md-5 ftco-animate">
+    				<div class="text py-3 py-md-5">
+	            <h2 class="mb-4">Погрузитесь в мир китайской кухни с нашими эксклюзивными наборами для приготовления блюд.</h2>
+	            <p><a href="{% url 'products_by_category' type_mis='салаты' %}" class="btn btn-white px-4 py-3">салаты</a></p>
+    				</div>
+    			</div>
+    		</div>
+
+    		<div class="row">
+    			<div class="col-md-5 order-md-last d-flex align-items-stretch">
+    				<div class="img img-2" style="background-image: url(/static/images/about-2.jpg);"></div>
+    			</div>
+    			<div class="col-md-7 py-3 py-md-5 ftco-animate">
+    				<div class="text text-2 py-md-5">
+	            <h2 class="mb-4">Приготовьтесь открыть для себя новые вкусы и ароматы.</h2>
+	            <p><a href="{% url 'products_by_category' type_mis='закуски' %}" class="btn btn-white px-4 py-3">закуски</a></p>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+{% endblock container %}

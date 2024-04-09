@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    resultat
+{% endblock title %}
+
+{% block container %}
+	<div class="hero-wrap hero-bread ftco-animate">
+	  <div class="container">
+	    <div class="row no-gutters slider-text align-items-center justify-content-center ftco-animate">
+	      <div class="col-md-9 ftco-animate text-center ftco-animate">
+	      	<p class="breadcrumbs"><span class="mr-2"><a href="/">Главная</a></span> <span><a href="{% url 'shop' %}">Магазин</a></span></p>
+	        <h1 class="mb-0 bread">Спасибо за покупку.</h1>
+	        <h2 class="mb-0 bread">Мы свяжемся с вами в ближайшее время.</h2>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{% endblock container %}

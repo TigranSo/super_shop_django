@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %}
+    cart
+{% endblock title %}
+
+{% block container %}
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>&nbsp;</th>
+						        <th>Товар</th>
+						        <th>Цена</th>
+						        <th>Количество</th>
+						        <th>Итог</th>
+						      </tr>
+						    </thead>
+						    {% if not items %}
+						    <tbody>
+						      <tr class="text-center">
+							        <td class="price">
+							        	<h3>Пусто</h3>
+							        </td>
+						      </tr><!-- END TR-->
+						    </tbody>
+						    {% else %}
+							    {% for item in items %}
+								    <tbody>
+								      <tr class="text-center">
+								      	<form method="post" action="{% url 'cart_delete_item' item.pk %}">
+								      		{% csrf_token %}
+								        	<td class="product-remove"><button type="submit" class="bu" style="width: 50px;"><span class="ion-ios-close"></span></button></td>
+								        </form>
+								      	<td class="image-prod"><div class="img" style="background-image:url({{ item.product.image.url }});"></div></td>
+								        <td class="product-name">
+								        	<h3>{{ item.product }}</h3>
+								        </td>
+								        
+								        <td class="price">{{ item.price }} руб. </td>
+								        
+								        <td class="quantity">
+								        	<div class="input-group mb-3">
+							             	<h2 class="form-control" >{{ item.quantity }} шт.</h2>
+							          	</div>
+							          </td>
+								        <td class="total">{{ item.amount }} руб.</td>
+								      </tr><!-- END TR-->
+								    </tbody>
+							    {% endfor %}
+							  {% endif %}
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+    		<br>
+    		<h3 class="billing-heading mb-4" style="text-align: right;" > <span>Итог</span> {{ cart.amount }} руб.</h3>
+	      <div class="container">
+	        <div class="row justify-content-center">
+	          <div class="col-xl-8 ftco-animate">
+				<form method="post" class="billing-form" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h3 class="mb-4 billing-heading">Платежные реквизиты</h3>
+                <hr class="hr"/>
+	                <div class="main-heading-block d-flex justify-content-center ftco-animate" >
+	                    <h2 class="main-heading"  onclick="hiddenSamavizov()">доставка</h2>
+	                    &nbsp;&nbsp;<p style="font-size: 32px">&nbsp;&nbsp;/</p>
+	                    <h2 class="main-heading  ftco-animate" onclick="hiddenDostovka()">&nbsp;&nbsp;самовывоз</h2>
+	                </div> 
+	                 Телефон:
+                    {{ form.phone }}
+	                <div id ="dastavka" class="ftco-animate item">
+
+	                    {{ form.location.label_tag }}
+	                    {{ form.location }}
+
+	                    {{ form.home.label_tag }}
+	                    {{ form.home }}
+
+	                    {{ form.podezd.label_tag }}
+	                    {{ form.podezd }}
+
+	                    {{ form.etaj.label_tag }}
+	                    {{ form.etaj }}
+
+	                    {{ form.kvartir.label_tag }}
+	                    {{ form.kvartir }}
+
+
+	                    {{ form.comment.label_tag }}
+	                    {{ form.comment }}
+                  </div>
+                  <div id ="samavizov"class="main-heading-block ftco-animate item" style="display: none;">
+                    <br></br>
+                    <h3>Выбирайте дату</h3>      
+					<label for="date">  <strong>Дата:</strong></label>
+					<input type="date" id="id_time_samo" name="time_samo" style="padding: 5px; border: 1px solid #ccc; border-radius: 15px; font-size: 16px;"/>
+
+                    </div> 
+                    <h3 class="ftco-animate">Cпособ оплаты</h3>      
+                    <select class="select " for="id_domofon" id="id_domofon" name="domofon" required style="padding: 5px; border: 1px solid #ccc; border-radius: 15px; font-size: 16px;"/>
+                        <option value="">-----------</option>
+                        <option value="Наличными при получении">Наличными при получении</option>
+                        <option value="Картой при получении">Картой при получении</option>
+                        <option value="Банковской картой онлайн">Банковской картой онлайн</option>
+                    </select>
+                <hr class="hr"/>
+								<div class="row" style="font-weight: bold">
+                    <div class="col-12 col-md-10 item">
+                    </div>
+                    <div class="col-12 col-md-10 item">
+                        {% if not items %}
+                            <div type="text" class="contactus-bar-btn f_right">
+                                В корзине ничего нет
+                            </div>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary py-3 px-4">
+                                Оформить заказ
+                            </button>
+                        {% endif %}
+                            <script src="{% static '/js/search.js' %}"></script>
+                    </div>
+                </div>
+		          </form>
+	          </div> 
+	        </div>
+	      </div>
+	    </section> 
+    
+{% endblock container %}

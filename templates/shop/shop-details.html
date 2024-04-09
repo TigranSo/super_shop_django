@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %}
+    product_single
+{% endblock title %}
+
+{% block container %}
+
+    <section class="ftco-section">
+	<div id="notification-container" style="position: fixed; top: 100px; right: 10px; z-index: 1000;"></div>
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-lg-6 mb-5 ftco-animate">
+    				<a href="{% if product.image %}{{product.image.url}}{% else %}{{product.image_url}}{% endif %}" class="image-popup"><img src="{% if product.image %}{{product.image.url}}{% else %}{{product.image_url}}{% endif %}" class="img-fluid" alt="Colorlib Template"></a>
+    			</div>
+    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+    				<h3><b>{{ product.name}}</b></h3>
+					{% comment %} <p class="price"><span>Скидка: {{product.price|div:100|mul:product.Discount }} руб.</span></p> {% endcomment %}
+    				<p class="price"><span>Цена: {{product.price }} руб.</span></p>
+					<form id="add-to-cart-form" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="product_id" value="{{ product.pk }}">
+						<div class="form-group d-flex">
+							<input type="number" name="quantity" value="1" min="1" class="form-control" style="margin-right: 10px;">
+							<button type="button" class="btn btn-success" onclick="addToCartDetails()">Добавить</button>
+						</div>
+					</form>
+					<h3><b>Описание</b></h3>
+    				<p>{{ product.note }}</p>
+						<div class="row mt-4">
+							<div class="col-md-6">
+								<div class="form-group d-flex">
+		              <div class="select-wrap">
+	                </div>
+		            </div>
+				</div>
+	          	<div class="w-100"></div>
+	          	<div class="col-md-12">
+	          		<p style="color: #000;">Время добавление: {{product.time}} </p>
+	          	</div>
+          	</div>
+          	<!-- <p><a href="{% url 'cart_view' %}" class="btn btn-black py-3 px-5">Корзина</a></p> -->
+          	{% comment %} <p><a href="{% url 'shop' %}" class="btn btn-black">Назад</a></p> {% endcomment %}
+    			</div>
+    		</div>
+    	</div>
+    </section>
+	<script>
+		function addToCartDetails() {
+			const formElement = document.getElementById('add-to-cart-form');
+			const formData = new FormData(formElement);
+			const productPk = formData.get('product_id');
+
+			fetch(`/add-item-to-cart/${productPk}`, {
+				method: 'POST',
+				body: formData,
+				headers: {
+					"X-CSRFToken": formData.get('csrfmiddlewaretoken')
+				},
+				credentials: 'include'
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === 'success') {
+					function showNotification(message) {
+						const container = document.getElementById('notification-container');
+						const notification = document.createElement('div');
+						notification.classList.add('notification');
+						notification.textContent = message;
+
+						container.appendChild(notification);
+
+						setTimeout(() => {
+							container.removeChild(notification);
+						}, 3000);
+					}
+					showNotification('Товар успешно добавлен в корзину', formElement.querySelector(".notification-container"));
+					document.getElementById("cart-count").textContent = data.cart_count;
+				} else {
+					showNotification('Ошибка при добавлении товара в корзину', formElement.querySelector(".notification-container"));
+				}
+			})
+			.catch(error => console.error('Ошибка:', error));
+		}
+
+	</script>
+    
+{% endblock container %}

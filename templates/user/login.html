@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Log In
+{% endblock title %}
+
+{% block container %}
+
+	<!-- container start -->
+    <br><br>
+    <div class="container">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 offset-md-5">
+                    <h2 class="sub-heading-medium m-15px-b">Вход</h2>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 offset-md-5">
+                    <h2 class="sub-heading-medium m-15px-b">{{ attention }}</h2>
+                </div>
+            </div>
+            {% for error in login_form.non_field_errors %}
+           <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 offset-md-5">
+                    <h2 class="sub-heading-medium m-15px-b">{{ error }}</h2>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 offset-md-4">
+                    <div class="quote-form-wrapper">
+                        <label class="form-label" for="id_username">Логин</label>
+                        <input type="text" class="form-input" placeholder=""
+                               id="id_username" name="username" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 offset-md-4">
+                    <div class="quote-form-wrapper">
+                        <label class="form-label" for="id_password">Пароль</label>
+                        <input type="password" class="form-input" placeholder=""
+                               id="id_password" name="password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-4 col-md-4 offset-md-4">
+                    <div class="quote-form-wrapper">
+                        <button type="submit" class="request-quote-btn">Войти</button><br><br>
+                        <p>Нет учетной записи? <a href="{% url 'register' %}">Зарегистрируйтесь сейчас.</a></p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br><br>
+    <br><br>
+{% endblock container %}
